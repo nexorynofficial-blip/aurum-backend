@@ -1,0 +1,236 @@
+// AURUM — Prisma schema (mirrors TRD §4.3)
+// Learn more: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ============ USERS & AUTH ============
+model User {
+  id                    String   @id @default(cuid())
+  email                 String   @unique
+  passwordHash          String
+  firstName             String
+  lastName              String
+  role                  Role     @default(CUSTOMER)
+  emailVerified         Boolean  @default(false)
+  emailVerificationCode String?
+  resetToken            String?  @unique
+  resetTokenExpires     DateTime?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  orders         Order[]
+  addresses      Address[]
+  paymentMethods PaymentMethod[]
+  wishlist       Wishlist[]
+
+  @@index([email])
+  @@index([resetToken])
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label     String
+  firstName String
+  lastName  String
+  street    String
+  city      String
+  state     String
+  zipCode   String
+  country   String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model PaymentMethod {
+  id                    String   @id @default(cuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripePaymentMethodId String   @unique
+  brand                 String
+  last4                 String
+  expiryMonth           Int
+  expiryYear            Int
+  isDefault             Boolean  @default(false)
+  createdAt             DateTime @default(now())
+
+  @@index([userId])
+}
+
+// ============ PRODUCTS & CATALOG ============
+model Product {
+  id          String   @id @default(cuid())
+  sku         String   @unique
+  name        String
+  slug        String   @unique
+  description String
+  story       String?
+  price       Decimal  @db.Decimal(10, 2)
+  cost        Decimal  @db.Decimal(10, 2) @default(0)
+  images      String[]
+  material    String?
+  color       String?
+  stoneType   String?
+  weight      Decimal  @db.Decimal(8, 2) @default(0)
+  stock       Int      @default(0)
+  isNew       Boolean  @default(false)
+  isPublished Boolean  @default(false)
+  variants    Json?
+  details     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  collections CollectionProduct[]
+  wishlist    Wishlist[]
+  orderItems  OrderLineItem[]
+
+  @@index([slug])
+  @@index([sku])
+}
+
+model Collection {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  tagline     String?
+  description String
+  image       String?
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products CollectionProduct[]
+
+  @@index([slug])
+}
+
+model CollectionProduct {
+  id           String     @id @default(cuid())
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  productId    String
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sortOrder    Int        @default(0)
+
+  @@unique([collectionId, productId])
+  @@index([collectionId])
+  @@index([productId])
+}
+
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
+
+// ============ ORDERS & CHECKOUT ============
+model Order {
+  id             String  @id @default(cuid())
+  orderNumber    String  @unique
+  userId         String?
+  user           User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  guestEmail     String?
+  guestFirstName String?
+  guestLastName  String?
+
+  status       OrderStatus @default(PENDING)
+  subtotal     Decimal     @db.Decimal(10, 2)
+  taxAmount    Decimal     @db.Decimal(10, 2)
+  shippingCost Decimal     @db.Decimal(10, 2)
+  total        Decimal     @db.Decimal(10, 2)
+
+  shippingAddress Json
+  billingAddress  Json?
+
+  notes                 String?
+  trackingNumber        String?
+  stripePaymentIntentId String  @unique
+  paidAt                DateTime?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  dispatchedAt DateTime?
+  deliveredAt  DateTime?
+
+  lineItems        OrderLineItem[]
+  shippingMethod   ShippingMethod  @relation(fields: [shippingMethodId], references: [id])
+  shippingMethodId String
+
+  @@index([orderNumber])
+  @@index([userId])
+  @@index([guestEmail])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderLineItem {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  productName     String
+  image           String?
+  quantity        Int
+  priceAtPurchase Decimal @db.Decimal(10, 2)
+  variant         Json?
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model ShippingMethod {
+  id            String  @id @default(cuid())
+  name          String
+  code          String  @unique
+  baseCost      Decimal @db.Decimal(10, 2)
+  estimatedDays Int
+  orders        Order[]
+}
+
+// Optional DB-persisted cart (primary cart store is Redis).
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  items     Json
+  subtotal  Decimal  @db.Decimal(10, 2)
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ============ ENUMS ============
+enum OrderStatus {
+  PENDING
+  DISPATCHED
+  DELIVERED
+  RETURNED
+  CANCELLED
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
