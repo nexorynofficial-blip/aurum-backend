@@ -5,6 +5,7 @@ import { logger } from './logger';
 /**
  * A single shared Prisma client. In development we cache it on `globalThis`
  * so hot-reloads don't exhaust the connection pool.
+ * On serverless (Vercel), delay connection until first use.
  */
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
