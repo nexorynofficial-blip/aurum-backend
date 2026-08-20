@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { isDatabaseHealthy } from '@/config/database';
-import { isRedisHealthy } from '@/config/redis';
+import { isDatabaseHealthy } from '../config/database';
+import { isRedisHealthy } from '../config/redis';
 
 /** Liveness probe. */
 export function health(_req: Request, res: Response) {

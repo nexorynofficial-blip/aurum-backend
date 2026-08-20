@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { prisma } from '@/config/database';
-import { ApiError } from '@/utils/apiError';
+import { prisma } from '../config/database';
+import { ApiError } from '../utils/apiError';
 import { serializeProduct } from './productController';
 
 export async function listCollections(_req: Request, res: Response) {

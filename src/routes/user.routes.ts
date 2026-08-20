@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { asyncHandler } from '@/utils/asyncHandler';
-import { requireAuth } from '@/middleware/auth';
-import * as user from '@/controllers/userController';
+import { asyncHandler } from '../utils/asyncHandler';
+import { requireAuth } from '../middleware/auth';
+import * as user from '../controllers/userController';
 
 const router = Router();
 

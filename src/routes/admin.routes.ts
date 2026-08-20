@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { asyncHandler } from '@/utils/asyncHandler';
-import { requireAdmin } from '@/middleware/auth';
-import { healthDetailed } from '@/controllers/healthController';
-import * as admin from '@/controllers/adminController';
+import { asyncHandler } from '../utils/asyncHandler';
+import { requireAdmin } from '../middleware/auth';
+import { healthDetailed } from '../controllers/healthController';
+import * as admin from '../controllers/adminController';
 
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });

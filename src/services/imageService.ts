@@ -1,8 +1,8 @@
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { s3, publicAssetBase } from '@/config/s3';
-import { env } from '@/config/env';
-import { ApiError } from '@/utils/apiError';
+import { s3, publicAssetBase } from '../config/s3';
+import { env } from '../config/env';
+import { ApiError } from '../utils/apiError';
 
 function client() {
   if (!s3) throw ApiError.serviceUnavailable('Image storage is not configured');

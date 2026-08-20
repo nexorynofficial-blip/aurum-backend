@@ -1,5 +1,5 @@
-import { redis } from '@/config/redis';
-import { env } from '@/config/env';
+import { redis } from '../config/redis';
+import { env } from '../config/env';
 
 const ttlSeconds = env.JWT_EXPIRY * 24 * 60 * 60;
 

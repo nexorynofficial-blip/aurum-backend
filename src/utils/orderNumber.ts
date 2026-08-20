@@ -1,4 +1,4 @@
-import { prisma } from '@/config/database';
+import { prisma } from '../config/database';
 
 /**
  * Generate the next sequential order number, e.g. "AU-2026-00042".

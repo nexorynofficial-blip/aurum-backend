@@ -1,9 +1,9 @@
 import { app } from './app';
-import { env } from '@/config/env';
-import { logger } from '@/config/logger';
-import { connectDatabase } from '@/config/database';
-import { connectRedis, redis } from '@/config/redis';
-import { prisma } from '@/config/database';
+import { env } from './config/env';
+import { logger } from './config/logger';
+import { connectDatabase } from './config/database';
+import { connectRedis, redis } from './config/redis';
+import { prisma } from './config/database';
 
 async function main() {
   // Connect datastores, but don't crash the API if they're temporarily down —

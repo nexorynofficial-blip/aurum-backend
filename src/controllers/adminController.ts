@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { prisma } from '@/config/database';
-import { toNumber } from '@/utils/validators';
-import { ApiError } from '@/utils/apiError';
-import { uploadImageToS3 } from '@/services/imageService';
-import { sendShippingUpdateEmail } from '@/services/emailService';
+import { prisma } from '../config/database';
+import { toNumber } from '../utils/validators';
+import { ApiError } from '../utils/apiError';
+import { uploadImageToS3 } from '../services/imageService';
+import { sendShippingUpdateEmail } from '../services/emailService';
 
 const STATUS_MAP: Record<string, string> = {
   PENDING: 'pending',

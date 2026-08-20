@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { asyncHandler } from '@/utils/asyncHandler';
-import * as collections from '@/controllers/collectionController';
+import { asyncHandler } from '../utils/asyncHandler';
+import * as collections from '../controllers/collectionController';
 
 const router = Router();
 

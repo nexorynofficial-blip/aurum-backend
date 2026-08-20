@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { prisma } from '@/config/database';
-import { env } from '@/config/env';
-import { ApiError } from '@/utils/apiError';
-import { toNumber } from '@/utils/validators';
-import { computeTotals } from '@/utils/pricing';
-import { generateOrderNumber } from '@/utils/orderNumber';
+import { prisma } from '../config/database';
+import { env } from '../config/env';
+import { ApiError } from '../utils/apiError';
+import { toNumber } from '../utils/validators';
+import { computeTotals } from '../utils/pricing';
+import { generateOrderNumber } from '../utils/orderNumber';
 import { v4 as uuid } from 'uuid';
-import { createPaymentIntent, retrievePaymentIntent } from '@/services/paymentService';
-import { stripe } from '@/config/stripe';
-import { sendOrderConfirmationEmail } from '@/services/emailService';
-import * as cartService from '@/services/cartService';
+import { createPaymentIntent, retrievePaymentIntent } from '../services/paymentService';
+import { stripe } from '../config/stripe';
+import { sendOrderConfirmationEmail } from '../services/emailService';
+import * as cartService from '../services/cartService';
 
 const addressSchema = z.object({
   firstName: z.string().min(1),

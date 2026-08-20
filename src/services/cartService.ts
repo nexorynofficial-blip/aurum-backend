@@ -1,9 +1,9 @@
 import { Request } from 'express';
-import { redis } from '@/config/redis';
-import { prisma } from '@/config/database';
-import { computeTotals } from '@/utils/pricing';
-import { toNumber } from '@/utils/validators';
-import { ApiError } from '@/utils/apiError';
+import { redis } from '../config/redis';
+import { prisma } from '../config/database';
+import { computeTotals } from '../utils/pricing';
+import { toNumber } from '../utils/validators';
+import { ApiError } from '../utils/apiError';
 
 const TTL = 30 * 24 * 60 * 60; // 30 days
 

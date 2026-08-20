@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { asyncHandler } from '@/utils/asyncHandler';
-import { optionalAuth } from '@/middleware/auth';
-import { cartContext } from '@/middleware/cartContext';
-import * as checkout from '@/controllers/checkoutController';
+import { asyncHandler } from '../utils/asyncHandler';
+import { optionalAuth } from '../middleware/auth';
+import { cartContext } from '../middleware/cartContext';
+import * as checkout from '../controllers/checkoutController';
 
 const router = Router();
 

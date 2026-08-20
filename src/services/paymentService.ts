@@ -1,5 +1,5 @@
-import { stripe } from '@/config/stripe';
-import { ApiError } from '@/utils/apiError';
+import { stripe } from '../config/stripe';
+import { ApiError } from '../utils/apiError';
 
 function client() {
   if (!stripe) throw ApiError.serviceUnavailable('Payments are not configured');

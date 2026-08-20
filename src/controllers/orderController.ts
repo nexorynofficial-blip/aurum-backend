@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { prisma } from '@/config/database';
-import { toNumber } from '@/utils/validators';
-import { ApiError } from '@/utils/apiError';
+import { prisma } from '../config/database';
+import { toNumber } from '../utils/validators';
+import { ApiError } from '../utils/apiError';
 
 const STATUS_MAP: Record<string, string> = {
   PENDING: 'pending',

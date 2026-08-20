@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import { prisma } from '@/config/database';
-import { env, isProd } from '@/config/env';
-import { generateJWT, verifyJWT } from '@/utils/jwt';
-import { ApiError } from '@/utils/apiError';
+import { prisma } from '../config/database';
+import { env, isProd } from '../config/env';
+import { generateJWT, verifyJWT } from '../utils/jwt';
+import { ApiError } from '../utils/apiError';
 import {
   sendPasswordResetEmail,
   sendWelcomeEmail,
-} from '@/services/emailService';
-import { saveUserSession, clearUserSession } from '@/services/sessionService';
+} from '../services/emailService';
+import { saveUserSession, clearUserSession } from '../services/sessionService';
 
 const cookieOptions = {
   httpOnly: true,

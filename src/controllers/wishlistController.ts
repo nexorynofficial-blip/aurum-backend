@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { prisma } from '@/config/database';
-import { ApiError } from '@/utils/apiError';
+import { prisma } from '../config/database';
+import { ApiError } from '../utils/apiError';
 import { serializeProduct } from './productController';
 
 export async function getWishlist(req: Request, res: Response) {

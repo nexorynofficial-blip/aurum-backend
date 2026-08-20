@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import type Stripe from 'stripe';
-import { stripe } from '@/config/stripe';
-import { env } from '@/config/env';
-import { prisma } from '@/config/database';
-import { logger } from '@/config/logger';
-import { toNumber } from '@/utils/validators';
+import { stripe } from '../config/stripe';
+import { env } from '../config/env';
+import { prisma } from '../config/database';
+import { logger } from '../config/logger';
+import { toNumber } from '../utils/validators';
 import {
   sendOrderConfirmationEmail,
   sendPaymentFailedEmail,
-} from '@/services/emailService';
+} from '../services/emailService';
 
 /**
  * Stripe webhook. Mounted with express.raw so the signature can be verified

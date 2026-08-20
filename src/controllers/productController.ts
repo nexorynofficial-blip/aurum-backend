@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { Prisma } from '@prisma/client';
-import { prisma } from '@/config/database';
-import { toNumber } from '@/utils/validators';
-import { ApiError } from '@/utils/apiError';
+import { prisma } from '../config/database';
+import { toNumber } from '../utils/validators';
+import { ApiError } from '../utils/apiError';
 
 type ProductRow = Prisma.ProductGetPayload<{
   include: { collections: { include: { collection: true } } };

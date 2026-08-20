@@ -7,10 +7,10 @@ import morgan from 'morgan';
 import { env, isDev } from './config/env';
 import { globalRateLimiter } from './middleware/rateLimit';
 import { errorHandler } from './middleware/errorHandler';
-import { notFound } from '@/middleware/notFound';
-import { asyncHandler } from '@/utils/asyncHandler';
-import { handleWebhook } from '@/controllers/stripeController';
-import apiRoutes from '@/routes';
+import { notFound } from './middleware/notFound';
+import { asyncHandler } from './utils/asyncHandler';
+import { handleWebhook } from './controllers/stripeController';
+import apiRoutes from './routes';
 
 export const app = express();
 

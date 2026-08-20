@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { Prisma } from '@prisma/client';
 import { ZodError } from 'zod';
-import { ApiError } from '@/utils/apiError';
-import { isProd } from '@/config/env';
-import { logger } from '@/config/logger';
+import { ApiError } from '../utils/apiError';
+import { isProd } from '../config/env';
+import { logger } from '../config/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {

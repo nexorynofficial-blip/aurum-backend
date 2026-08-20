@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { prisma } from '@/config/database';
-import { ApiError } from '@/utils/apiError';
+import { prisma } from '../config/database';
+import { ApiError } from '../utils/apiError';
 
 export async function getProfile(req: Request, res: Response) {
   if (!req.user) throw ApiError.unauthorized();

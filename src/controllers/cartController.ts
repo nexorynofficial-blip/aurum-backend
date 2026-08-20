@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import * as cart from '@/services/cartService';
+import * as cart from '../services/cartService';
 
 export async function getCart(req: Request, res: Response) {
   res.json(await cart.getCart(req));

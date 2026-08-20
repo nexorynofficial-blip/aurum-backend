@@ -1,6 +1,6 @@
-import sgMail from '@/config/sendgrid';
-import { env, features } from '@/config/env';
-import { logger } from '@/config/logger';
+import sgMail from '../config/sendgrid';
+import { env, features } from '../config/env';
+import { logger } from '../config/logger';
 
 interface Mail {
   to: string;

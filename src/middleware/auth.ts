@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { verifyJWT } from '@/utils/jwt';
-import { prisma } from '@/config/database';
-import { ApiError } from '@/utils/apiError';
+import { verifyJWT } from '../utils/jwt';
+import { prisma } from '../config/database';
+import { ApiError } from '../utils/apiError';
 
 function extractToken(req: Request): string | null {
   const header = req.headers.authorization;
