@@ -1,5 +1,5 @@
 import rateLimit from 'express-rate-limit';
-import { env } from '@/config/env';
+import { env } from '../config/env';
 
 /** Global limiter — max requests per 15-minute window (TRD §7 / setup guide). */
 export const globalRateLimiter = rateLimit({
