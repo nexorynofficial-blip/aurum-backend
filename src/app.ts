@@ -18,8 +18,14 @@ app.set('trust proxy', 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: env.CORS_ORIGIN.split(',').map((s) => s.trim()),
+    origin: [
+      'http://localhost:3000',
+      'https://aurum-frontend-nexoryn.vercel.app',
+      'https://aurum-frontend-theta.vercel.app',
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 app.use(compression());
