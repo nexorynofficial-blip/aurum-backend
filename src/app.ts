@@ -6,7 +6,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import { env, isDev } from './config/env';
 import { globalRateLimiter } from './middleware/rateLimit';
-import { errorHandler } from '@/middleware/errorHandler';
+import { errorHandler } from './middleware/errorHandler';
 import { notFound } from '@/middleware/notFound';
 import { asyncHandler } from '@/utils/asyncHandler';
 import { handleWebhook } from '@/controllers/stripeController';
