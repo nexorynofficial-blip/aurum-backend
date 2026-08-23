@@ -70,7 +70,11 @@ export async function login(req: Request, res: Response) {
 
 export async function logout(req: Request, res: Response) {
   if (req.user?.id) await clearUserSession(req.user.id).catch(() => undefined);
-  res.clearCookie('authToken', { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax' });
+  res.clearCookie('authToken', {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: (isProd ? 'none' : 'lax') as const,
+  });
   res.json({ message: 'Logged out' });
 }
 
