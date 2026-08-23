@@ -16,7 +16,7 @@ const cookieOptions = {
   secure: isProd,
   // Frontend and backend live on different Vercel domains, so the auth
   // cookie is cross-site — 'lax' is dropped on cross-site fetch/XHR.
-  sameSite: (isProd ? 'none' : 'lax') as const,
+  sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
   maxAge: env.JWT_EXPIRY * 24 * 60 * 60 * 1000,
 };
 
@@ -73,7 +73,7 @@ export async function logout(req: Request, res: Response) {
   res.clearCookie('authToken', {
     httpOnly: true,
     secure: isProd,
-    sameSite: (isProd ? 'none' : 'lax') as const,
+    sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
   });
   res.json({ message: 'Logged out' });
 }
